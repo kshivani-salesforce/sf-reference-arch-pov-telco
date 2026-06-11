@@ -48,8 +48,12 @@ export default function BssOssStrip() {
 
   return (
     <div
-      className="rounded-xl overflow-hidden"
-      style={{ background: "var(--grad-navy)", boxShadow: "var(--elev-2)" }}
+      className="rounded-xl overflow-hidden relative z-10"
+      style={{
+        background: "var(--grad-navy)",
+        border: "1px solid var(--slds-border)",
+        boxShadow: "var(--elev-2)",
+      }}
     >
       <div className="grid grid-cols-2 divide-x" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
         {column(

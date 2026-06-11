@@ -28,19 +28,18 @@ export default function NodeCard({ node, isSelected, onClick, delay = 0 }: Props
   return (
     <motion.button
       onClick={() => onClick(node)}
-      whileHover={{ y: -3, boxShadow: "var(--elev-3)" }}
-      whileTap={{ scale: 0.985 }}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.34, delay, ease: "easeOut" }}
-      className="group relative flex flex-col gap-2 p-3 pl-4 rounded-xl text-left w-full overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      transition={{ duration: 0.34, delay, ease: [0.23, 1, 0.32, 1] }}
+      className="node-card group relative flex flex-col gap-2 p-3 pl-4 rounded-xl text-left w-full overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{
         background: isSelected
-          ? `linear-gradient(180deg, ${trackBg}, #ffffff)`
-          : "rgba(255,255,255,0.96)",
+          ? `linear-gradient(180deg, ${trackBg}, var(--surface-lift))`
+          : "var(--slds-card-bg)",
+        backdropFilter: "blur(6px)",
         border: `1px solid ${isSelected ? trackColor : "var(--slds-border)"}`,
         boxShadow: isSelected
-          ? `0 0 0 2px ${trackColor}40, var(--elev-2)`
+          ? `0 0 0 2px ${trackColor}55, var(--elev-2)`
           : "var(--elev-1)",
       } as React.CSSProperties}
     >
@@ -69,7 +68,7 @@ export default function NodeCard({ node, isSelected, onClick, delay = 0 }: Props
         )}
         <span
           className="text-xs font-bold truncate"
-          style={{ color: isSelected ? trackColor : cloud.color }}
+          style={{ color: isSelected ? trackColor : "var(--slds-text-weak)" }}
         >
           {cloud.shortName}
         </span>

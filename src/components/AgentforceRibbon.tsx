@@ -9,9 +9,10 @@ export default function AgentforceRibbon() {
 
   return (
     <div
-      className="rounded-xl overflow-hidden"
+      className="rounded-xl overflow-hidden relative z-10"
       style={{
-        background: "linear-gradient(160deg, #f0f8ff, #ffffff)",
+        background: "linear-gradient(160deg, rgba(27,150,255,0.16), rgba(13,27,46,0.6))",
+        backdropFilter: "blur(8px)",
         border: "1px solid var(--agent-border)",
         boxShadow: "var(--glow-blue)",
       }}
@@ -65,17 +66,17 @@ export default function AgentforceRibbon() {
           >
             <div
               className="px-5 pb-4 pt-3 grid grid-cols-8 gap-2"
-              style={{ borderTop: "1px solid var(--slds-border)", background: "var(--agent-bg)" }}
+              style={{ borderTop: "1px solid var(--slds-border)", background: "rgba(0,0,0,0.18)" }}
             >
               {AGENTFORCE_RIBBON.map((item, idx) => (
                 <motion.div
                   key={item.stage}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: idx * 0.04 }}
+                  transition={{ duration: 0.25, delay: idx * 0.04, ease: [0.23, 1, 0.32, 1] }}
                   className="rounded-lg p-2.5"
                   style={{
-                    background: "var(--slds-card-bg)",
+                    background: "var(--surface-lift)",
                     border: "1px solid var(--slds-border)",
                     boxShadow: "var(--elev-1)",
                   }}

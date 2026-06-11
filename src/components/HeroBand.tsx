@@ -6,9 +6,10 @@ const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 const rise: Variants = {
   hidden: { opacity: 0, y: 14 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
 };
 
 const STATS = [
@@ -26,8 +27,11 @@ export default function HeroBand() {
       animate="show"
       className="relative overflow-hidden"
       style={{
-        background: "var(--grad-navy)",
-        boxShadow: "var(--elev-2)",
+        /* No solid fill or hard shadow ledge — the hero flows into the dark
+           canvas. A faint top sheen + glows give it presence without a seam. */
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 40%)",
+        borderBottom: "1px solid var(--slds-border)",
       }}
     >
       {/* Atmospheric glows */}
@@ -35,7 +39,7 @@ export default function HeroBand() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(620px 320px at 88% -20%, rgba(244,96,12,0.30), transparent 60%), radial-gradient(560px 300px at 10% 130%, rgba(88,103,232,0.34), transparent 60%)",
+            "radial-gradient(620px 320px at 88% -20%, rgba(255,138,76,0.22), transparent 60%), radial-gradient(560px 300px at 10% 130%, rgba(138,123,255,0.24), transparent 60%)",
         }}
       />
 

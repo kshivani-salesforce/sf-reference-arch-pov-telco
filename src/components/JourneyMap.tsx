@@ -24,9 +24,9 @@ export default function JourneyMap() {
 
       {/* ── Legend toolbar ──────────────────────────────────────────────────── */}
       <div
-        className="px-8 py-2.5 flex items-center justify-between gap-4 flex-wrap"
+        className="px-8 py-2.5 flex items-center justify-between gap-4 flex-wrap relative z-10"
         style={{
-          background: "rgba(255,255,255,0.78)",
+          background: "rgba(13,27,46,0.55)",
           backdropFilter: "blur(8px)",
           borderBottom: "1px solid var(--slds-border)",
         }}
@@ -74,9 +74,10 @@ export default function JourneyMap() {
       {/* ── Main canvas ──────────────────────────────────────────────────────── */}
       <div className="flex-1 px-8 py-7 overflow-x-auto">
         <div
-          className="rounded-2xl min-w-[1120px]"
+          className="rounded-2xl min-w-[1120px] relative z-10"
           style={{
-            background: "rgba(255,255,255,0.92)",
+            background: "var(--slds-card-bg)",
+            backdropFilter: "blur(12px)",
             border: "1px solid var(--slds-border)",
             boxShadow: "var(--elev-3)",
             padding: "20px",
@@ -89,11 +90,11 @@ export default function JourneyMap() {
               const isLast = i === STAGES.length - 1;
               const isFork = !!stage.forks;
               const isMerge = !!stage.merges;
-              const bg = isFork
-                ? "var(--grad-vocus)"
-                : isMerge
-                ? "var(--grad-platform)"
-                : "var(--grad-navy)";
+              // One calm dark chevron fill; the accent gradient is reserved
+              // for the two narrative beats — where the tracks fork and merge.
+              const bg = isFork || isMerge
+                ? "var(--grad-accent)"
+                : "linear-gradient(180deg, rgba(30,49,79,0.95), rgba(18,32,54,0.95))";
 
               return (
                 <div
@@ -154,9 +155,8 @@ export default function JourneyMap() {
                       <div
                         className="absolute -inset-1 rounded-xl pointer-events-none"
                         style={{
-                          border: "1px dashed rgba(13,27,46,0.18)",
-                          background: "rgba(255,255,255,0.55)",
-                          backdropFilter: "blur(1px)",
+                          border: "1px dashed rgba(255,255,255,0.16)",
+                          background: "rgba(255,255,255,0.03)",
                         }}
                       />
                     )}
@@ -166,7 +166,7 @@ export default function JourneyMap() {
                         node={node}
                         isSelected={selected?.id === node.id}
                         onClick={handleSelect}
-                        delay={0.45 + si * 0.07 + ni * 0.05}
+                        delay={0.12 + si * 0.05 + ni * 0.04}
                       />
                     ))}
                   </div>
@@ -187,10 +187,11 @@ export default function JourneyMap() {
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0 }}
+            transition={{ delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
             className="flex items-center gap-4 rounded-xl px-5 py-4"
             style={{
-              background: "rgba(255,255,255,0.92)",
+              background: "var(--slds-card-bg)",
+              backdropFilter: "blur(8px)",
               border: "1px solid var(--slds-border)",
               boxShadow: "var(--elev-2)",
             }}
@@ -214,10 +215,11 @@ export default function JourneyMap() {
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.08 }}
+            transition={{ delay: 0.66, ease: [0.23, 1, 0.32, 1] }}
             className="flex items-center gap-4 rounded-xl px-5 py-4"
             style={{
-              background: "rgba(255,255,255,0.92)",
+              background: "var(--slds-card-bg)",
+              backdropFilter: "blur(8px)",
               border: "1px solid var(--slds-border)",
               boxShadow: "var(--elev-2)",
             }}
@@ -253,9 +255,10 @@ export default function JourneyMap() {
 
       {/* ── Footer ───────────────────────────────────────────────────────────── */}
       <footer
-        className="px-6 py-3 flex items-center justify-between"
+        className="px-6 py-3 flex items-center justify-between relative z-10"
         style={{
-          background: "var(--slds-card-bg)",
+          background: "rgba(13,27,46,0.55)",
+          backdropFilter: "blur(8px)",
           borderTop: "1px solid var(--slds-border)",
         }}
       >
@@ -264,7 +267,7 @@ export default function JourneyMap() {
         </span>
         <div className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/Salesforce-Corporate-Logo-Cloud-RBG.svg" alt="Salesforce" className="h-5 w-auto opacity-50" />
+          <img src="/Salesforce-Corporate-Logo-Cloud-RBG.svg" alt="Salesforce" className="h-5 w-auto opacity-60 brightness-0 invert" />
           <span className="text-xs" style={{ color: "var(--slds-text-muted)" }}>
             Built on Salesforce Platform
           </span>

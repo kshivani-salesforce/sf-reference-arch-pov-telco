@@ -2,62 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* SLDS design tokens */
+/* ─────────────────────────────────────────────────────────────────────────
+   Dark cinematic design tokens.
+   Names kept stable (--slds-*) so components don't all need editing; only the
+   values flip from light SLDS to a dark keynote canvas. Track identities
+   (SMB blue / Enterprise violet) carry meaning and stay; chrome collapses to
+   one signature accent.
+   ───────────────────────────────────────────────────────────────────────── */
 :root {
-  /* Page and surface */
-  --slds-page-bg:       #f4f5f9;
-  --slds-card-bg:       #ffffff;
-  --slds-border:        #dddbda;
-  --slds-border-light:  #e5e5e5;
+  /* Page and surface — dark */
+  --slds-page-bg:       #0a1322;  /* deep navy canvas */
+  --slds-card-bg:       rgba(22,38,63,0.72);   /* dark glass surface */
+  --surface-lift:       rgba(30,49,79,0.85);   /* raised card */
+  --surface-solid:      #122036;  /* opaque dark panel */
+  --slds-border:        rgba(255,255,255,0.10);
+  --slds-border-light:  rgba(255,255,255,0.06);
+  --slds-border-strong: rgba(255,255,255,0.18);
 
-  /* Text */
-  --slds-text-title:    #181818;
-  --slds-text-default:  #3e3e3c;
-  --slds-text-weak:     #706e6b;
-  --slds-text-muted:    #aeaeae;
+  /* Text — inverted for dark */
+  --slds-text-title:    #f3f6fc;
+  --slds-text-default:  rgba(255,255,255,0.82);
+  --slds-text-weak:     rgba(255,255,255,0.60);
+  --slds-text-muted:    rgba(255,255,255,0.42);
 
   /* Salesforce brand */
-  --slds-blue:          #0176d3;
-  --slds-blue-dark:     #014486;
-  --slds-blue-light:    #d8edff;
+  --slds-blue:          #1b96ff;  /* lifted for dark-bg legibility */
+  --slds-blue-dark:     #0176d3;
+  --slds-blue-light:    rgba(27,150,255,0.14);
 
   /* Vocus accent */
-  --vocus-orange:       #f4600c;
-  --vocus-orange-light: #fef0e8;
+  --vocus-orange:       #ff8a4c;
+  --vocus-orange-light: rgba(244,96,12,0.14);
   --vocus-navy:         #0d1b2e;
   --vocus-navy-2:       #16263f;
 
-  /* Track colours */
-  --smb-color:          #0176d3;
-  --smb-bg:             #d8edff;
-  --ent-color:          #5867e8;
-  --ent-bg:             #ece9fb;
+  /* Track colours — the two speeds. Lifted so they read on dark. */
+  --smb-color:          #4aa3ff;
+  --smb-bg:             rgba(27,150,255,0.16);
+  --ent-color:          #8a7bff;
+  --ent-bg:             rgba(88,103,232,0.18);
 
   /* Agentforce */
-  --agent-color:        #0176d3;
-  --agent-bg:           #f0f8ff;
-  --agent-border:       #a8c8f0;
+  --agent-color:        #5fb4ff;
+  --agent-bg:           rgba(27,150,255,0.10);
+  --agent-border:       rgba(95,180,255,0.30);
 
-  /* Display font (hero + numerals); body stays Salesforce Sans */
-  --font-display: "Bricolage Grotesque", "Salesforce Sans", -apple-system, sans-serif;
+  /* Display font (hero + numerals); body stays Salesforce Sans → Inter */
+  --font-display: var(--font-inter), "Salesforce Sans", -apple-system, sans-serif;
 
-  /* Gradients (keynote-premium flow language) */
-  --grad-smb:      linear-gradient(135deg, #0176d3 0%, #4aa3ff 100%);
-  --grad-ent:      linear-gradient(135deg, #5867e8 0%, #8a7bff 100%);
-  --grad-platform: linear-gradient(135deg, #0176d3 0%, #5867e8 100%);
+  /* Gradients. ONE signature accent (amber → blue) for emphasis; the two
+     track gradients stay because they encode SMB vs Enterprise. */
+  --grad-accent:   linear-gradient(100deg, #ff8a4c 0%, #4aa3ff 100%);
+  --grad-smb:      linear-gradient(135deg, #1b96ff 0%, #6fc0ff 100%);
+  --grad-ent:      linear-gradient(135deg, #5867e8 0%, #a99bff 100%);
+  --grad-platform: linear-gradient(135deg, #1b96ff 0%, #8a7bff 100%);
   --grad-vocus:    linear-gradient(135deg, #f4600c 0%, #ff8a4c 100%);
   --grad-navy:     linear-gradient(135deg, #0d1b2e 0%, #1c3357 100%);
 
-  /* Elevation + glow */
-  --slds-shadow-sm:  0 1px 2px 0 rgba(16,24,40,0.06), 0 1px 3px 0 rgba(16,24,40,0.10);
-  --slds-shadow-md:  0 4px 8px -2px rgba(16,24,40,0.10), 0 2px 4px -2px rgba(16,24,40,0.06);
-  --slds-shadow-lg:  0 12px 28px -6px rgba(16,24,40,0.16), 0 4px 10px -4px rgba(16,24,40,0.10);
-  --elev-1:          0 1px 2px 0 rgba(16,24,40,0.06), 0 1px 3px 0 rgba(16,24,40,0.10);
-  --elev-2:          0 6px 16px -6px rgba(16,24,40,0.18), 0 2px 6px -2px rgba(16,24,40,0.08);
-  --elev-3:          0 22px 48px -12px rgba(16,24,40,0.24), 0 8px 16px -8px rgba(16,24,40,0.12);
-  --glow-orange:     0 0 36px -8px rgba(244,96,12,0.55);
-  --glow-blue:       0 0 36px -8px rgba(1,118,211,0.55);
-  --glow-ent:        0 0 36px -8px rgba(88,103,232,0.50);
+  /* Elevation + glow — deepened shadows read on dark. */
+  --slds-shadow-sm:  0 1px 2px 0 rgba(0,0,0,0.30), 0 1px 3px 0 rgba(0,0,0,0.36);
+  --slds-shadow-md:  0 6px 16px -6px rgba(0,0,0,0.50), 0 2px 6px -2px rgba(0,0,0,0.35);
+  --slds-shadow-lg:  0 18px 40px -12px rgba(0,0,0,0.60), 0 6px 14px -6px rgba(0,0,0,0.40);
+  --elev-1:          0 1px 2px 0 rgba(0,0,0,0.30), 0 1px 3px 0 rgba(0,0,0,0.36);
+  --elev-2:          0 10px 24px -10px rgba(0,0,0,0.55), 0 3px 8px -3px rgba(0,0,0,0.40);
+  --elev-3:          0 28px 56px -16px rgba(0,0,0,0.66), 0 10px 20px -10px rgba(0,0,0,0.45);
+  --glow-orange:     0 0 44px -10px rgba(255,138,76,0.45);
+  --glow-blue:       0 0 44px -10px rgba(27,150,255,0.50);
+  --glow-ent:        0 0 44px -10px rgba(138,123,255,0.45);
+
+  /* Motion — strong custom easings (built-in CSS easings are too weak). */
+  --ease-out:     cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out:  cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:  cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,25 +82,39 @@ html, body {
   width: 100%;
   min-height: 100vh;
   color: var(--slds-text-default);
-  font-family: "Salesforce Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Salesforce Sans", var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Warm, layered canvas atmosphere: soft brand auroras + faint dot grid.
-   Fixed so it stays put while the map scrolls. */
+/* Dark cinematic atmosphere: warm centre bloom + cool counter-bloom over the
+   navy canvas. Fixed so it stays put while the map scrolls. */
 body {
   background-color: var(--slds-page-bg);
   background-image:
-    radial-gradient(1100px 520px at 12% -8%, rgba(244,96,12,0.10), transparent 60%),
-    radial-gradient(1000px 560px at 92% 4%, rgba(88,103,232,0.12), transparent 62%),
-    radial-gradient(1200px 700px at 50% 118%, rgba(1,118,211,0.10), transparent 60%),
-    radial-gradient(rgba(13,27,46,0.045) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 22px 22px;
+    radial-gradient(1100px 640px at 50% 52%, rgba(255,138,76,0.10), transparent 62%),
+    radial-gradient(820px 520px at 90% -4%, rgba(74,163,255,0.12), transparent 60%),
+    radial-gradient(900px 560px at 6% 108%, rgba(138,123,255,0.12), transparent 62%),
+    linear-gradient(180deg, #08101d 0%, #0a1322 48%, #070d18 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   background-attachment: fixed;
-  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background-repeat: no-repeat;
+}
+
+/* Subtle film grain for the cinematic finish. Overlay element keeps it cheap
+   and lets us blend without touching content. */
+.noise::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }
 
 .font-display { font-family: var(--font-display); }
@@ -95,14 +125,51 @@ nextjs-portal, #__next-build-watcher { display: none !important; }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--slds-border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #aeaeae; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
 
-/* Respect reduced-motion: kill the looping flow comets and shimmer. */
+/* ── Node card hover / press ─────────────────────────────────────────────
+   CSS-driven so it's interruptible and off the JS path. Transform + shadow
+   only. Hover gated to real pointers so touch taps don't fire false hovers. */
+.node-card {
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out),
+              border-color 200ms var(--ease-out);
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .node-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--elev-3);
+  }
+}
+.node-card:active {
+  transform: scale(0.985);
+  transition-duration: 120ms;
+}
+
+/* ── Two-speed flow comets ───────────────────────────────────────────────
+   Off the main thread via stroke-dashoffset keyframes, so they stay smooth
+   while the page loads / records. SMB faster than Enterprise — the two speeds.
+   pathLength is normalised to 1 on the <path>, so dash units are 0..1. */
+@keyframes flowComet {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+.flow-comet {
+  stroke-dasharray: 0.08 0.92;
+  animation: flowComet var(--comet-dur, 4s) linear infinite;
+  animation-delay: var(--comet-delay, 0.8s);
+}
+.flow-comet--spine { stroke-dasharray: 0.06 0.94; }
+
+/* Respect reduced-motion: kill the looping flow comets and collapse entrances
+   to gentle fades (no movement). */
 @media (prefers-reduced-motion: reduce) {
   .flow-comet { display: none !important; }
+  .noise::after { display: none !important; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

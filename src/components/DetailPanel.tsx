@@ -35,17 +35,21 @@ export default function DetailPanel({ node, onClose }: Props) {
             exit={{ opacity: 0 }}
             onClick={onClose}
             className="fixed inset-0 z-40"
-            style={{ background: "rgba(0,0,0,0.3)" }}
+            style={{ background: "rgba(3,7,15,0.55)", backdropFilter: "blur(2px)" }}
           />
           <motion.aside
             key={node.id}
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 380, damping: 36 }}
+            initial={{ transform: "translateX(100%)", opacity: 0 }}
+            animate={{ transform: "translateX(0%)", opacity: 1 }}
+            exit={{ transform: "translateX(100%)", opacity: 0 }}
+            transition={{
+              transform: { type: "spring", stiffness: 420, damping: 38 },
+              opacity: { duration: 0.18 },
+            }}
             className="fixed top-0 right-0 h-full w-[440px] z-50 flex flex-col"
             style={{
-              background: "var(--slds-card-bg)",
+              background: "var(--surface-solid)",
+              borderLeft: "1px solid var(--slds-border)",
               boxShadow: "var(--elev-3)",
             }}
           >
@@ -111,7 +115,7 @@ export default function DetailPanel({ node, onClose }: Props) {
               className="flex-1 overflow-y-auto px-6 py-5 space-y-5"
               style={{
                 backgroundImage:
-                  "radial-gradient(520px 280px at 110% -5%, rgba(88,103,232,0.05), transparent 60%)",
+                  "radial-gradient(520px 280px at 110% -5%, rgba(138,123,255,0.12), transparent 60%)",
               }}
             >
               {/* Capabilities */}
@@ -149,7 +153,7 @@ export default function DetailPanel({ node, onClose }: Props) {
                 <section
                   className="rounded-xl p-4"
                   style={{
-                    background: "linear-gradient(160deg, #f0f8ff, #ffffff)",
+                    background: "linear-gradient(160deg, rgba(27,150,255,0.14), rgba(27,150,255,0.04))",
                     border: "1px solid var(--agent-border)",
                     boxShadow: "var(--glow-blue)",
                   }}
@@ -178,13 +182,14 @@ export default function DetailPanel({ node, onClose }: Props) {
               <section
                 className="rounded-lg p-4"
                 style={{
-                  background: `${cloud.color}0d`,
-                  border: `1px solid ${cloud.color}40`,
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid var(--slds-border)",
+                  borderLeft: `3px solid ${trackColor}`,
                 }}
               >
                 <h3
                   className="text-xs font-bold uppercase tracking-widest mb-1.5"
-                  style={{ color: cloud.color }}
+                  style={{ color: "var(--slds-text-weak)" }}
                 >
                   SE Domain
                 </h3>
@@ -197,10 +202,10 @@ export default function DetailPanel({ node, onClose }: Props) {
             {/* Footer */}
             <div
               className="px-6 py-3 flex items-center gap-3"
-              style={{ borderTop: "1px solid var(--slds-border)", background: "var(--slds-page-bg)" }}
+              style={{ borderTop: "1px solid var(--slds-border)", background: "rgba(0,0,0,0.25)" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/Salesforce-Corporate-Logo-Cloud-RBG.svg" alt="Salesforce" className="h-5 w-auto opacity-60" />
+              <img src="/Salesforce-Corporate-Logo-Cloud-RBG.svg" alt="Salesforce" className="h-5 w-auto opacity-70 brightness-0 invert" />
               <span className="text-xs" style={{ color: "var(--slds-text-muted)" }}>
                 Vocus Reference Architecture · Internal
               </span>

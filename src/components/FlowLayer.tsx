@@ -48,8 +48,8 @@ const popGlow: Variants = {
 
 export default function FlowLayer() {
   const reduce = useReducedMotion();
-  // Comets begin once the lanes have drawn in.
-  const cometDelay = 1.4;
+  // Comets begin once the lanes have drawn in (faster settle than before).
+  const cometDelay = 0.8;
 
   return (
     <motion.svg
@@ -156,10 +156,13 @@ export default function FlowLayer() {
         ENTERPRISE · STRATEGIC LANE
       </text>
 
-      {/* The two speeds: comets riding each lane, SMB faster than Enterprise. */}
+      {/* The two speeds: comets riding each lane, SMB faster than Enterprise.
+          Animated via CSS stroke-dashoffset (.flow-comet) so they run off the
+          main thread and stay smooth while the page loads or is recorded.
+          pathLength={1} normalises dash units to 0..1 for the keyframe. */}
       {!reduce && (
         <>
-          <motion.path
+          <path
             className="flow-comet"
             d={SMB_LANE_D}
             stroke="#7cc0ff"
@@ -167,15 +170,9 @@ export default function FlowLayer() {
             strokeLinecap="round"
             filter="url(#flow-glow)"
             pathLength={1}
-            style={{ strokeDasharray: "0.08 0.92" } as React.CSSProperties}
-            initial={{ pathOffset: 0, opacity: 0 }}
-            animate={{ pathOffset: [0, 1], opacity: 1 }}
-            transition={{
-              pathOffset: { duration: 3.4, ease: "linear", repeat: Infinity, delay: cometDelay },
-              opacity: { duration: 0.4, delay: cometDelay },
-            }}
+            style={{ "--comet-dur": "3.4s", "--comet-delay": `${cometDelay}s` } as React.CSSProperties}
           />
-          <motion.path
+          <path
             className="flow-comet"
             d={ENT_LANE_D}
             stroke="#a99bff"
@@ -183,30 +180,18 @@ export default function FlowLayer() {
             strokeLinecap="round"
             filter="url(#flow-glow)"
             pathLength={1}
-            style={{ strokeDasharray: "0.08 0.92" } as React.CSSProperties}
-            initial={{ pathOffset: 0, opacity: 0 }}
-            animate={{ pathOffset: [0, 1], opacity: 1 }}
-            transition={{
-              pathOffset: { duration: 6.5, ease: "linear", repeat: Infinity, delay: cometDelay },
-              opacity: { duration: 0.4, delay: cometDelay },
-            }}
+            style={{ "--comet-dur": "6.5s", "--comet-delay": `${cometDelay}s` } as React.CSSProperties}
           />
           {/* Spine pulse feeding the fork */}
-          <motion.path
-            className="flow-comet"
+          <path
+            className="flow-comet flow-comet--spine"
             d={SPINE_D}
             stroke="#6aa9ff"
             strokeWidth={4.5}
             strokeLinecap="round"
             filter="url(#flow-glow)"
             pathLength={1}
-            style={{ strokeDasharray: "0.06 0.94" } as React.CSSProperties}
-            initial={{ pathOffset: 0, opacity: 0 }}
-            animate={{ pathOffset: [0, 1], opacity: 1 }}
-            transition={{
-              pathOffset: { duration: 4.6, ease: "linear", repeat: Infinity, delay: cometDelay },
-              opacity: { duration: 0.4, delay: cometDelay },
-            }}
+            style={{ "--comet-dur": "4.6s", "--comet-delay": `${cometDelay}s` } as React.CSSProperties}
           />
         </>
       )}
