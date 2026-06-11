@@ -9,11 +9,11 @@ export default function AgentforceRibbon() {
 
   return (
     <div
-      className="rounded-lg overflow-hidden"
+      className="rounded-xl overflow-hidden"
       style={{
-        background: "var(--slds-card-bg)",
+        background: "linear-gradient(160deg, #f0f8ff, #ffffff)",
         border: "1px solid var(--agent-border)",
-        boxShadow: "var(--slds-shadow-sm)",
+        boxShadow: "var(--glow-blue)",
       }}
     >
       <button
@@ -38,12 +38,8 @@ export default function AgentforceRibbon() {
         </div>
         <div className="flex items-center gap-3">
           <span
-            className="text-xs font-bold px-2.5 py-1 rounded-full"
-            style={{
-              background: "var(--agent-bg)",
-              color: "var(--agent-color)",
-              border: "1px solid var(--agent-border)",
-            }}
+            className="text-xs font-bold px-3 py-1 rounded-full text-white"
+            style={{ background: "var(--grad-platform)", boxShadow: "0 2px 10px -2px rgba(1,118,211,0.6)" }}
           >
             16 agents
           </span>
@@ -71,13 +67,17 @@ export default function AgentforceRibbon() {
               className="px-5 pb-4 pt-3 grid grid-cols-8 gap-2"
               style={{ borderTop: "1px solid var(--slds-border)", background: "var(--agent-bg)" }}
             >
-              {AGENTFORCE_RIBBON.map((item) => (
-                <div
+              {AGENTFORCE_RIBBON.map((item, idx) => (
+                <motion.div
                   key={item.stage}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: idx * 0.04 }}
                   className="rounded-lg p-2.5"
                   style={{
                     background: "var(--slds-card-bg)",
                     border: "1px solid var(--slds-border)",
+                    boxShadow: "var(--elev-1)",
                   }}
                 >
                   <div
@@ -95,7 +95,7 @@ export default function AgentforceRibbon() {
                       · {a}
                     </div>
                   ))}
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>

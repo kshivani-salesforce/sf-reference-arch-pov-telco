@@ -7,6 +7,8 @@ import NodeCard from "./NodeCard";
 import DetailPanel from "./DetailPanel";
 import AgentforceRibbon from "./AgentforceRibbon";
 import BssOssStrip from "./BssOssStrip";
+import HeroBand from "./HeroBand";
+import FlowLayer from "./FlowLayer";
 
 export default function JourneyMap() {
   const [selected, setSelected] = useState<JourneyNode | null>(null);
@@ -15,107 +17,68 @@ export default function JourneyMap() {
     setSelected((prev) => (prev?.id === node.id ? null : node));
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "var(--slds-page-bg)" }}>
+    <div className="min-h-screen flex flex-col">
 
-      {/* ── Header ──────────────────────────────────────────────────────────── */}
-      <header
-        className="px-6 py-3 flex items-center justify-between gap-4 flex-wrap"
+      {/* ── Hero ────────────────────────────────────────────────────────────── */}
+      <HeroBand />
+
+      {/* ── Legend toolbar ──────────────────────────────────────────────────── */}
+      <div
+        className="px-8 py-2.5 flex items-center justify-between gap-4 flex-wrap"
         style={{
-          background: "var(--slds-card-bg)",
+          background: "rgba(255,255,255,0.78)",
+          backdropFilter: "blur(8px)",
           borderBottom: "1px solid var(--slds-border)",
-          boxShadow: "var(--slds-shadow-sm)",
         }}
       >
-        <div className="flex items-center gap-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/Salesforce-Corporate-Logo-Cloud-RBG.svg" alt="Salesforce" className="h-8 w-auto" />
-          <div
-            className="w-px h-8"
-            style={{ background: "var(--slds-border)" }}
-          />
-          <div>
-            <div
-              className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: "var(--slds-text-weak)" }}
-            >
-              Salesforce for Vocus
-            </div>
-            <h1
-              className="text-xl font-bold leading-tight"
-              style={{ color: "var(--slds-text-title)" }}
-            >
-              End-to-End Customer Journey
-            </h1>
-          </div>
-          <span
-            className="text-xs font-bold px-2.5 py-1 rounded-full"
-            style={{
-              background: "var(--vocus-orange-light)",
-              color: "var(--vocus-orange)",
-              border: "1px solid #f4600c55",
-            }}
-          >
-            SMB Fibre · v0.1
-          </span>
-        </div>
-
         {/* Track legend */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full" style={{ background: "var(--smb-color)" }} />
+            <span className="w-3 h-3 rounded-full" style={{ background: "var(--grad-smb)" }} />
             <span className="text-sm font-semibold" style={{ color: "var(--smb-color)" }}>SMB track</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full" style={{ background: "var(--ent-color)" }} />
+            <span className="w-3 h-3 rounded-full" style={{ background: "var(--grad-ent)" }} />
             <span className="text-sm font-semibold" style={{ color: "var(--ent-color)" }}>Enterprise track</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span
-              className="w-3 h-3 rounded-full"
-              style={{ background: "var(--slds-border)" }}
-            />
+            <span className="w-3 h-3 rounded-full" style={{ background: "var(--slds-border)" }} />
             <span className="text-sm" style={{ color: "var(--slds-text-weak)" }}>Shared</span>
           </div>
         </div>
-      </header>
 
-      {/* ── Cloud legend bar ────────────────────────────────────────────────── */}
-      <div
-        className="px-6 py-2 flex items-center gap-3 flex-wrap"
-        style={{
-          background: "var(--slds-card-bg)",
-          borderBottom: "1px solid var(--slds-border)",
-        }}
-      >
-        <span
-          className="text-xs font-bold uppercase tracking-widest mr-1"
-          style={{ color: "var(--slds-text-muted)" }}
-        >
-          Platform
-        </span>
-        {Object.values(CLOUDS).map((cloud) => (
-          <div key={cloud.key} className="flex items-center gap-1.5">
-            {cloud.icon ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={cloud.icon} alt={cloud.name} className="w-5 h-5 object-contain" />
-            ) : (
-              <span className="w-2.5 h-2.5 rounded-full" style={{ background: cloud.color }} />
-            )}
-            <span className="text-xs font-medium" style={{ color: "var(--slds-text-weak)" }}>
-              {cloud.shortName}
-            </span>
-          </div>
-        ))}
+        {/* Cloud legend */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <span
+            className="text-xs font-bold uppercase tracking-widest mr-1"
+            style={{ color: "var(--slds-text-muted)" }}
+          >
+            Platform
+          </span>
+          {Object.values(CLOUDS).map((cloud) => (
+            <div key={cloud.key} className="flex items-center gap-1.5">
+              {cloud.icon ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={cloud.icon} alt={cloud.name} className="w-5 h-5 object-contain" />
+              ) : (
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: cloud.color }} />
+              )}
+              <span className="text-xs font-medium" style={{ color: "var(--slds-text-weak)" }}>
+                {cloud.shortName}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* ── Main canvas ──────────────────────────────────────────────────────── */}
-      <div className="flex-1 px-5 py-5 overflow-x-auto">
+      <div className="flex-1 px-8 py-7 overflow-x-auto">
         <div
-          className="rounded-xl min-w-[1120px]"
+          className="rounded-2xl min-w-[1120px]"
           style={{
-            background: "var(--slds-card-bg)",
+            background: "rgba(255,255,255,0.92)",
             border: "1px solid var(--slds-border)",
-            boxShadow: "var(--slds-shadow-md)",
+            boxShadow: "var(--elev-3)",
             padding: "20px",
           }}
         >
@@ -127,10 +90,10 @@ export default function JourneyMap() {
               const isFork = !!stage.forks;
               const isMerge = !!stage.merges;
               const bg = isFork
-                ? "var(--vocus-orange)"
+                ? "var(--grad-vocus)"
                 : isMerge
-                ? "var(--slds-blue)"
-                : "var(--vocus-navy)";
+                ? "var(--grad-platform)"
+                : "var(--grad-navy)";
 
               return (
                 <div
@@ -177,35 +140,39 @@ export default function JourneyMap() {
             })}
           </div>
 
-          {/* Node columns */}
-          <div className="grid grid-cols-8 gap-3 mt-1">
-            {STAGES.map((stage, si) => {
-              const nodes = JOURNEY_NODES.filter((n) => n.stage === stage.num);
-              const hasFork = nodes.some((n) => n.track !== "shared");
+          {/* Node columns over the two-speed flow layer */}
+          <div className="relative" style={{ minHeight: 240 }}>
+            <FlowLayer />
+            <div className="grid grid-cols-8 gap-3 mt-1 relative z-10">
+              {STAGES.map((stage, si) => {
+                const nodes = JOURNEY_NODES.filter((n) => n.stage === stage.num);
+                const hasFork = nodes.some((n) => n.track !== "shared");
 
-              return (
-                <div key={stage.num} className="flex flex-col gap-2 relative">
-                  {hasFork && (
-                    <div
-                      className="absolute -inset-1 rounded-xl pointer-events-none"
-                      style={{
-                        border: "1px dashed var(--slds-border)",
-                        background: "var(--slds-page-bg)",
-                      }}
-                    />
-                  )}
-                  {nodes.map((node, ni) => (
-                    <NodeCard
-                      key={node.id}
-                      node={node}
-                      isSelected={selected?.id === node.id}
-                      onClick={handleSelect}
-                      delay={si * 0.04 + ni * 0.03}
-                    />
-                  ))}
-                </div>
-              );
-            })}
+                return (
+                  <div key={stage.num} className="flex flex-col gap-2 relative">
+                    {hasFork && (
+                      <div
+                        className="absolute -inset-1 rounded-xl pointer-events-none"
+                        style={{
+                          border: "1px dashed rgba(13,27,46,0.18)",
+                          background: "rgba(255,255,255,0.55)",
+                          backdropFilter: "blur(1px)",
+                        }}
+                      />
+                    )}
+                    {nodes.map((node, ni) => (
+                      <NodeCard
+                        key={node.id}
+                        node={node}
+                        isSelected={selected?.id === node.id}
+                        onClick={handleSelect}
+                        delay={0.45 + si * 0.07 + ni * 0.05}
+                      />
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
         </div>
@@ -220,12 +187,12 @@ export default function JourneyMap() {
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center gap-4 rounded-lg px-5 py-4"
+            transition={{ delay: 1.0 }}
+            className="flex items-center gap-4 rounded-xl px-5 py-4"
             style={{
-              background: "var(--slds-card-bg)",
+              background: "rgba(255,255,255,0.92)",
               border: "1px solid var(--slds-border)",
-              boxShadow: "var(--slds-shadow-sm)",
+              boxShadow: "var(--elev-2)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -247,12 +214,12 @@ export default function JourneyMap() {
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex items-center gap-4 rounded-lg px-5 py-4"
+            transition={{ delay: 1.08 }}
+            className="flex items-center gap-4 rounded-xl px-5 py-4"
             style={{
-              background: "var(--slds-card-bg)",
+              background: "rgba(255,255,255,0.92)",
               border: "1px solid var(--slds-border)",
-              boxShadow: "var(--slds-shadow-sm)",
+              boxShadow: "var(--elev-2)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
