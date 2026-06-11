@@ -75,7 +75,7 @@ export default function JourneyMap() {
       {/* ── Main canvas ──────────────────────────────────────────────────────── */}
       <div className="flex-1 px-8 py-7 overflow-x-auto">
         <div
-          className="rounded-2xl w-[1120px] relative z-10"
+          className="rounded-2xl w-full min-w-[960px] relative z-10"
           style={{
             background: "var(--slds-card-bg)",
             backdropFilter: "blur(12px)",
@@ -91,11 +91,11 @@ export default function JourneyMap() {
               const isLast = i === STAGES.length - 1;
               const isFork = !!stage.forks;
               const isMerge = !!stage.merges;
-              // One calm dark chevron fill; the accent gradient is reserved
-              // for the two narrative beats — where the tracks fork and merge.
+              // Chevrons need to read clearly against the dark glass canvas:
+              // a lifted slate fill with a top sheen. Fork/merge get the accent.
               const bg = isFork || isMerge
                 ? "var(--grad-accent)"
-                : "linear-gradient(180deg, rgba(30,49,79,0.95), rgba(18,32,54,0.95))";
+                : "linear-gradient(180deg, #2c3f63 0%, #1b2d49 100%)";
 
               return (
                 <div
@@ -103,6 +103,9 @@ export default function JourneyMap() {
                   className="relative flex-1 flex items-center justify-center py-2.5 px-3 min-w-0"
                   style={{
                     background: bg,
+                    boxShadow: isFork || isMerge
+                      ? "inset 0 1px 0 rgba(255,255,255,0.25)"
+                      : "inset 0 1px 0 rgba(255,255,255,0.10)",
                     /* right-pointing chevron via clip-path on all but last */
                     clipPath: isLast
                       ? "polygon(12px 0%, 100% 0%, 100% 100%, 12px 100%, 0% 50%)"
@@ -164,10 +167,11 @@ export default function JourneyMap() {
 
             return (
               <div>
-                {/* Top row — first node of each stage, bottoms aligned to channel */}
-                <div className="grid grid-cols-8 gap-3 items-end">
+                {/* Top row — first node of each stage. items-stretch + h-full
+                    cells give every card the same height as its tallest peer. */}
+                <div className="grid grid-cols-8 gap-3 items-stretch">
                   {stageNodes.map((nodes, si) => (
-                    <div key={`top-${si}`}>{Card(nodes[0], si, 0)}</div>
+                    <div key={`top-${si}`} className="h-full">{Card(nodes[0], si, 0)}</div>
                   ))}
                 </div>
 
@@ -176,10 +180,10 @@ export default function JourneyMap() {
                   <FlowLayer />
                 </div>
 
-                {/* Bottom row — second node of each stage, tops aligned to channel */}
-                <div className="grid grid-cols-8 gap-3 items-start">
+                {/* Bottom row — second node of each stage */}
+                <div className="grid grid-cols-8 gap-3 items-stretch">
                   {stageNodes.map((nodes, si) => (
-                    <div key={`bot-${si}`}>{Card(nodes[1], si, 1)}</div>
+                    <div key={`bot-${si}`} className="h-full">{Card(nodes[1], si, 1)}</div>
                   ))}
                 </div>
               </div>
@@ -189,12 +193,12 @@ export default function JourneyMap() {
         </div>
 
         {/* ── Agentforce ribbon ───────────────────────────────────────────────── */}
-        <div className="mt-4 min-w-[1120px]">
+        <div className="mt-4 w-full min-w-[960px]">
           <AgentforceRibbon />
         </div>
 
         {/* ── Slack + MuleSoft row ─────────────────────────────────────────────── */}
-        <div className="mt-3 grid grid-cols-2 gap-3 min-w-[1120px]">
+        <div className="mt-3 grid grid-cols-2 gap-3 w-full min-w-[960px]">
           <motion.div
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
@@ -253,7 +257,7 @@ export default function JourneyMap() {
         </div>
 
         {/* ── BSS / OSS foundation ──────────────────────────────────────────────── */}
-        <div className="mt-3 min-w-[1120px]">
+        <div className="mt-3 w-full min-w-[960px]">
           <div
             className="text-xs font-bold uppercase tracking-widest mb-2"
             style={{ color: "var(--slds-text-weak)" }}

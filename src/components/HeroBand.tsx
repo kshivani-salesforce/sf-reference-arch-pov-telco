@@ -43,7 +43,7 @@ export default function HeroBand() {
         }}
       />
 
-      <div className="relative px-8 py-7 flex items-end justify-between gap-8 flex-wrap min-w-[1120px]">
+      <div className="relative px-8 py-7 flex items-end justify-between gap-8 flex-wrap">
         <div className="flex flex-col gap-3">
           {/* Lockup */}
           <motion.div variants={rise} className="flex items-center gap-3">

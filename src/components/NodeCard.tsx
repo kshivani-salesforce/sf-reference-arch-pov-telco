@@ -31,7 +31,7 @@ export default function NodeCard({ node, isSelected, onClick, delay = 0 }: Props
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.34, delay, ease: [0.23, 1, 0.32, 1] }}
-      className="node-card group relative flex flex-col gap-2 p-3 pl-4 rounded-xl text-left w-full overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="node-card group relative flex flex-col gap-2 p-3 pl-4 rounded-xl text-left w-full h-full overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{
         background: isSelected
           ? `linear-gradient(180deg, ${trackBg}, var(--surface-lift))`
