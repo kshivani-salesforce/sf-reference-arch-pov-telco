@@ -339,6 +339,20 @@ export const JOURNEY_NODES: JourneyNode[] = [
     ],
     agentforceTouch: "Collections Agent handles payment plan requests and disputes autonomously, escalating edge cases to staff.",
   },
+  {
+    id: "s7-rating",
+    stage: 7,
+    track: "shared",
+    label: "Usage Rating and Charging",
+    cloud: "mulesoft",
+    capabilities: [
+      { title: "Real-time mediation", detail: "MuleSoft mediates raw network usage events from the OSS into rateable records, ready for the billing engine." },
+      { title: "Convergent rating", detail: "Fibre, voice, and managed-service usage rated against catalogue pricing so every product lands on one convergent bill." },
+      { title: "Burstable and metered charging", detail: "Supports usage-based and burstable plans with accurate, near-real-time charge calculation for SMB and Enterprise alike." },
+      { title: "Revenue assurance", detail: "Reconciliation between mediated usage, rated charges, and the BSS billing engine catches leakage before it reaches the invoice." },
+    ],
+    agentforceTouch: "Integration Monitor Agent watches the usage-to-bill pipeline and flags rating anomalies or feed failures before they affect a bill run.",
+  },
 
   // STAGE 8: Retention and Growth
   {
