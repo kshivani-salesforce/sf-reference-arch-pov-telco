@@ -53,8 +53,8 @@ export default function FlowLayer() {
 
   return (
     <motion.svg
-      className="absolute pointer-events-none"
-      style={{ left: 20, top: -8, zIndex: 0 }}
+      className="absolute inset-0 pointer-events-none"
+      style={{ zIndex: 0 }}
       width={CANVAS_W}
       height={BAND_H}
       viewBox={`0 0 ${CANVAS_W} ${BAND_H}`}
@@ -96,8 +96,8 @@ export default function FlowLayer() {
       </defs>
 
       {/* Fork / merge focal halos */}
-      <motion.circle variants={popGlow} cx={FORK_X} cy={CENTER_Y} r={70} fill="url(#halo-orange)" />
-      <motion.circle variants={popGlow} cx={MERGE_X} cy={CENTER_Y} r={70} fill="url(#halo-blue)" />
+      <motion.circle variants={popGlow} cx={FORK_X} cy={CENTER_Y} r={54} fill="url(#halo-orange)" />
+      <motion.circle variants={popGlow} cx={MERGE_X} cy={CENTER_Y} r={54} fill="url(#halo-blue)" />
 
       {/* Base tracks (faint, full width) */}
       <motion.path
@@ -130,28 +130,28 @@ export default function FlowLayer() {
       <motion.path variants={drawPath} d={SMB_LANE_D} stroke="url(#grad-smb)" strokeWidth={2} strokeLinecap="round" />
       <motion.path variants={drawPath} d={ENT_LANE_D} stroke="url(#grad-ent)" strokeWidth={2} strokeLinecap="round" />
 
-      {/* Lane labels */}
+      {/* Lane labels — seated just inside each lane within the open channel. */}
       <text
         x={(FORK_X + MERGE_X) / 2}
-        y={UPPER_Y - 12}
+        y={UPPER_Y - 9}
         textAnchor="middle"
-        fontSize="11"
+        fontSize="10.5"
         fontWeight="700"
-        letterSpacing="1.5"
-        fill="#0176d3"
-        opacity={0.85}
+        letterSpacing="1.6"
+        fill="#7cc0ff"
+        opacity={0.95}
       >
         SMB · FAST LANE
       </text>
       <text
         x={(FORK_X + MERGE_X) / 2}
-        y={LOWER_Y + 22}
+        y={LOWER_Y + 18}
         textAnchor="middle"
-        fontSize="11"
+        fontSize="10.5"
         fontWeight="700"
-        letterSpacing="1.5"
-        fill="#5867e8"
-        opacity={0.85}
+        letterSpacing="1.6"
+        fill="#a99bff"
+        opacity={0.95}
       >
         ENTERPRISE · STRATEGIC LANE
       </text>

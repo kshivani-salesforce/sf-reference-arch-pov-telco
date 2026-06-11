@@ -9,6 +9,7 @@ import AgentforceRibbon from "./AgentforceRibbon";
 import BssOssStrip from "./BssOssStrip";
 import HeroBand from "./HeroBand";
 import FlowLayer from "./FlowLayer";
+import { BAND_H } from "@/lib/flowGeometry";
 
 export default function JourneyMap() {
   const [selected, setSelected] = useState<JourneyNode | null>(null);
@@ -74,7 +75,7 @@ export default function JourneyMap() {
       {/* ── Main canvas ──────────────────────────────────────────────────────── */}
       <div className="flex-1 px-8 py-7 overflow-x-auto">
         <div
-          className="rounded-2xl min-w-[1120px] relative z-10"
+          className="rounded-2xl w-[1120px] relative z-10"
           style={{
             background: "var(--slds-card-bg)",
             backdropFilter: "blur(12px)",
@@ -141,39 +142,49 @@ export default function JourneyMap() {
             })}
           </div>
 
-          {/* Node columns over the two-speed flow layer */}
-          <div className="relative" style={{ minHeight: 240 }}>
-            <FlowLayer />
-            <div className="grid grid-cols-8 gap-3 mt-1 relative z-10">
-              {STAGES.map((stage, si) => {
-                const nodes = JOURNEY_NODES.filter((n) => n.stage === stage.num);
-                const hasFork = nodes.some((n) => n.track !== "shared");
+          {/* Two-speed layout: top card-row (SMB / upper lane), an OPEN flow
+              channel where the spine forks and merges, then the bottom
+              card-row (Enterprise / lower lane). The flow is never occluded. */}
+          {(() => {
+            const stageNodes = STAGES.map((stage) =>
+              JOURNEY_NODES.filter((n) => n.stage === stage.num),
+            );
 
-                return (
-                  <div key={stage.num} className="flex flex-col gap-2 relative">
-                    {hasFork && (
-                      <div
-                        className="absolute -inset-1 rounded-xl pointer-events-none"
-                        style={{
-                          border: "1px dashed rgba(255,255,255,0.16)",
-                          background: "rgba(255,255,255,0.03)",
-                        }}
-                      />
-                    )}
-                    {nodes.map((node, ni) => (
-                      <NodeCard
-                        key={node.id}
-                        node={node}
-                        isSelected={selected?.id === node.id}
-                        onClick={handleSelect}
-                        delay={0.12 + si * 0.05 + ni * 0.04}
-                      />
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+            const Card = (node: JourneyNode | undefined, si: number, row: number) =>
+              node ? (
+                <NodeCard
+                  node={node}
+                  isSelected={selected?.id === node.id}
+                  onClick={handleSelect}
+                  delay={0.12 + si * 0.05 + row * 0.03}
+                />
+              ) : (
+                <div aria-hidden />
+              );
+
+            return (
+              <div>
+                {/* Top row — first node of each stage, bottoms aligned to channel */}
+                <div className="grid grid-cols-8 gap-3 items-end">
+                  {stageNodes.map((nodes, si) => (
+                    <div key={`top-${si}`}>{Card(nodes[0], si, 0)}</div>
+                  ))}
+                </div>
+
+                {/* Open flow channel — the split and merge live here, in the clear */}
+                <div className="relative" style={{ height: BAND_H }}>
+                  <FlowLayer />
+                </div>
+
+                {/* Bottom row — second node of each stage, tops aligned to channel */}
+                <div className="grid grid-cols-8 gap-3 items-start">
+                  {stageNodes.map((nodes, si) => (
+                    <div key={`bot-${si}`}>{Card(nodes[1], si, 1)}</div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
 
         </div>
 
