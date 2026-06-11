@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SLDS design tokens */
+:root {
+  /* Page and surface */
+  --slds-page-bg:       #f3f2f2;
+  --slds-card-bg:       #ffffff;
+  --slds-border:        #dddbda;
+  --slds-border-light:  #e5e5e5;
+
+  /* Text */
+  --slds-text-title:    #181818;
+  --slds-text-default:  #3e3e3c;
+  --slds-text-weak:     #706e6b;
+  --slds-text-muted:    #aeaeae;
+
+  /* Salesforce brand */
+  --slds-blue:          #0176d3;
+  --slds-blue-dark:     #014486;
+  --slds-blue-light:    #d8edff;
+
+  /* Vocus accent */
+  --vocus-orange:       #f4600c;
+  --vocus-orange-light: #fef0e8;
+  --vocus-navy:         #0d1b2e;
+
+  /* Track colours */
+  --smb-color:          #0176d3;
+  --smb-bg:             #d8edff;
+  --ent-color:          #5867e8;
+  --ent-bg:             #ece9fb;
+
+  /* Agentforce */
+  --agent-color:        #0176d3;
+  --agent-bg:           #f0f8ff;
+  --agent-border:       #a8c8f0;
+
+  /* Shadows */
+  --slds-shadow-sm:     0 2px 2px 0 rgba(0,0,0,0.10);
+  --slds-shadow-md:     0 4px 8px 0 rgba(0,0,0,0.12);
+  --slds-shadow-lg:     0 8px 16px 0 rgba(0,0,0,0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--slds-page-bg);
+  color: var(--slds-text-default);
+  font-family: "Salesforce Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+nextjs-portal, #__next-build-watcher { display: none !important; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--slds-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #aeaeae; }
