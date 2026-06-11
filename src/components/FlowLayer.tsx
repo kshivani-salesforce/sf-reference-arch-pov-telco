@@ -7,9 +7,18 @@ import {
   CENTER_Y,
   UPPER_Y,
   LOWER_Y,
+  CONNECTOR_TOP,
+  CONNECTOR_BOT,
   buildFlowGeometry,
   type FlowGeometry,
 } from "@/lib/flowGeometry";
+
+interface FlowLayerProps {
+  /** Column indices (0-based) of SHARED stages with two cards: draw a neutral
+      vertical connector tying both cards to the spine so they read as one
+      stage, not a fork. */
+  pairedIndices?: number[];
+}
 
 /**
  * The two-speed flow overlay. Measures its own container width and builds the
@@ -44,7 +53,7 @@ const popGlow: Variants = {
   show: { scale: 1, opacity: 1, transition: { duration: 0.5, ease: "backOut" } },
 };
 
-export default function FlowLayer() {
+export default function FlowLayer({ pairedIndices = [] }: FlowLayerProps) {
   const reduce = useReducedMotion();
   const cometDelay = 0.8;
 
@@ -107,6 +116,28 @@ export default function FlowLayer() {
               <stop offset="100%" stopColor="rgba(1,118,211,0)" />
             </radialGradient>
           </defs>
+
+          {/* Shared-stage connectors: a neutral vertical tie joining a stage's
+              two cards through its spine node. Signals "one shared stage, two
+              capabilities" — NOT a fork. Drawn first so the spine sits on top. */}
+          {pairedIndices.map((i) => {
+            const cx = geo.colCenters[i];
+            if (cx == null) return null;
+            return (
+              <motion.line
+                key={`conn-${i}`}
+                variants={drawPath}
+                x1={cx}
+                y1={CONNECTOR_TOP}
+                x2={cx}
+                y2={CONNECTOR_BOT}
+                stroke="rgba(255,255,255,0.18)"
+                strokeWidth={2}
+                strokeDasharray="3 4"
+                strokeLinecap="round"
+              />
+            );
+          })}
 
           {/* Fork / merge focal halos */}
           <motion.circle variants={popGlow} cx={geo.forkX} cy={CENTER_Y} r={50} fill="url(#halo-orange)" />

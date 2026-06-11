@@ -153,6 +153,22 @@ export default function JourneyMap() {
               JOURNEY_NODES.filter((n) => n.stage === stage.num),
             );
 
+            // A neutral connector ties a stage's two cards into one stage.
+            // Only for shared two-card stages OUTSIDE the fork→merge span
+            // (stages 1,2 and 7,8). Inside the span (stages 4,5) the two lanes
+            // legitimately run in parallel, so no connector there.
+            const FORK_I = 2; // stage 3
+            const MERGE_I = 5; // stage 6
+            const pairedIndices = stageNodes
+              .map((nodes, i) =>
+                nodes.length === 2 &&
+                nodes.every((n) => n.track === "shared") &&
+                (i < FORK_I || i > MERGE_I)
+                  ? i
+                  : -1,
+              )
+              .filter((i) => i >= 0);
+
             const Card = (node: JourneyNode | undefined, si: number, row: number) =>
               node ? (
                 <NodeCard
@@ -177,7 +193,7 @@ export default function JourneyMap() {
 
                 {/* Open flow channel — the split and merge live here, in the clear */}
                 <div className="relative" style={{ height: BAND_H }}>
-                  <FlowLayer />
+                  <FlowLayer pairedIndices={pairedIndices} />
                 </div>
 
                 {/* Bottom row — second node of each stage */}

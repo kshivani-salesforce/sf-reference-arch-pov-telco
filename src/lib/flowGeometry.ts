@@ -19,6 +19,15 @@ export const LANE_OFFSET = 40; // SMB lane above, Enterprise lane below
 export const UPPER_Y = CENTER_Y - LANE_OFFSET; // 35
 export const LOWER_Y = CENTER_Y + LANE_OFFSET; // 115
 
+/** Vertical "shared" connector that ties a stage's two cards to the spine,
+    used for stages OUTSIDE the fork so they read as one stage, not a fork. */
+export const CONNECTOR_TOP = 6;
+export const CONNECTOR_BOT = BAND_H - 6; // 144
+
+/** Stage indices (0-based) that fork into two lanes: stage 3 and stage 6. */
+export const FORK_INDEX = 2;
+export const MERGE_INDEX = 5;
+
 // Curve "shoulder" length for the fork/merge transitions.
 const SH = 40;
 
